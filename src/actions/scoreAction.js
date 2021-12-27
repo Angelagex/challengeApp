@@ -1,22 +1,20 @@
 import Swal from 'sweetalert2'
 import { db } from '../firebase/firebase-config'
 import { types } from '../types/types'
-import { loadQuestions } from '../helpers/loadQuestions'
+import { loadScore } from '../helpers/loadScore'
 
 
-export const QuestionNew = (question) => {
+export const UserNew = (user, acumulado, ganadas) => {
     return async (dispatch) => {
        
-        const newQuestion = {
-            enunciado: question.enunciado,
-            dificultad: question.dificultad,
-            opciones: [question.opc1, question.opc2, question.opc3, question.respuesta],
-            respuesta: question.respuesta
+        const newUser = {
+            name: user.displayName,
+            acumulado: acumulado,
+            ganandas: ganadas,
+            uid: user.uid
         }
-        const docRef = await db.collection(`challengeApp/question/data`).add(newQuestion)
-        dispatch(addNewQuestion(docRef.id, newQuestion))
-
-        Swal.fire('Saved', question.enunciado, 'success');
+        const docRef = await db.collection(`challengeApp/Score/data`).add(newUser)
+        dispatch(addNewUser(docRef.id, newUser))
 
     }
 }
@@ -80,10 +78,10 @@ export const deleteQuestion = (id) => ({
 
 //FUNCIÓN SINCRÓNICA 
 
-export const addNewQuestion = ( id, question ) => ({
-    type: types.questionAddNew,
+export const addNewUser = ( id, user ) => ({
+    type: types.userAddNew,
     payload: {
-        id, ...question
+        id, ...user
     }
 })
 
