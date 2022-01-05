@@ -85,34 +85,16 @@ export const addNewUser = ( id, user ) => ({
     }
 })
 
-export const ListarQuestion = () => {
+export const ListarScore = () => {
     return async (dispatch) =>{
-        const questions =  await loadQuestions()
-        dispatch(setQuestions(questions))
+        const score =  await loadScore()
+        dispatch(setScore(score))
     }
 }
 
-export const setQuestions = (questions) => {
+export const setScore = (users) => {
     return {
-        type: types.questionLoad,
-        payload: questions
+        type: types.userLoad,
+        payload: users
     }
 }
-
-export const activeQuestion = (id,question) => {
-    return{
-        type:types.questionActive,
-        payload:{
-            id,
-            ...question
-        }
-    }
-}
-
-
-export const clearQuestion = () => {
-    return {
-        type: types.questionLogoutClean
-    }
-}
-

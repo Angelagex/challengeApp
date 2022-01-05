@@ -7,6 +7,7 @@ import {
 import thunk from "redux-thunk";
 import { authReducer } from "../reducers/authReducer";
 import { questionReducer } from "../reducers/questionReducer";
+import { scoreReducer } from "../reducers/scoreReducer";
 import { uiReducer } from "../reducers/uiReducer";
 
 const composeEnhancers =
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   auth: authReducer,
   ui: uiReducer,
   question: questionReducer,
+  score: scoreReducer
 });
 
 export const store = createStore(

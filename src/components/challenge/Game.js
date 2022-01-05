@@ -16,37 +16,37 @@ export const Game = () => {
   const [opciones, setOpciones] = useState([]);
   const [opcion, setOpcion] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const history = useHistory(); 
+  const history = useHistory();
 
   const handlePremio = () => {
     switch (dificultad) {
       case "facil":
-        return setPremio(50)
+        return setPremio(50);
       case "media":
-        return setPremio(150)
+        return setPremio(150);
       case "elevada":
-        return setPremio(450)
+        return setPremio(450);
       case "dificil":
-        return setPremio(950)
+        return setPremio(950);
       case "veterano":
-        return setPremio(1550)
+        return setPremio(1550);
     }
   };
 
   const handleDificultad = () => {
     switch (restantes) {
       case 5:
-        return setDificultad("facil")
+        return setDificultad("facil");
       case 4:
-        return setDificultad("media")
+        return setDificultad("media");
       case 3:
-        return setDificultad("elevada")
+        return setDificultad("elevada");
       case 2:
-        return setDificultad("dificil")
+        return setDificultad("dificil");
       case 1:
-        return setDificultad("veterano")
+        return setDificultad("veterano");
     }
-  }
+  };
 
   const nextAnsr = () => {
     handleDificultad();
@@ -66,7 +66,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    setRestantes(restantes-1);
+    setRestantes(restantes - 1);
     nextAnsr();
     setLoaded(true);
   }, [loaded]);
@@ -96,24 +96,22 @@ export const Game = () => {
     });
   };
 
-
   const handleCheck = (e) => {
     e.preventDefault();
     if (pregunta.respuesta === opcion) {
-
-      if (restantes > 0){
-      Swal.fire({
-        title: "¡Felicidades!",
-        text: `Has ganado ${premio}USD`,
-        icon: "success",
-        confirmButtonText: "Siguiente pregunta",
-      }).then((resultado) => {
-        if (resultado.value) {
-          setRestantes(restantes-1);
-          setAcumulado(acumulado + premio);
-          return nextAnsr();
-        }
-      });
+      if (restantes > 0) {
+        Swal.fire({
+          title: "¡Felicidades!",
+          text: `Has ganado ${premio}USD`,
+          icon: "success",
+          confirmButtonText: "Siguiente pregunta",
+        }).then((resultado) => {
+          if (resultado.value) {
+            setRestantes(restantes - 1);
+            setAcumulado(acumulado + premio);
+            return nextAnsr();
+          }
+        });
       } else {
         Swal.fire({
           title: "¡Felicidades!",
@@ -125,14 +123,26 @@ export const Game = () => {
             setAcumulado(acumulado + premio);
             return goBack();
           }
-        })
+        });
       }
+    } else {
+      Swal.fire({
+        title: "Fallaste",
+        text: `¡Mejor suerte para la proxima!`,
+        icon: "error",
+        confirmButtonText: "Terminar Partida",
+      }).then((resultado) => {
+        if (resultado.value) {
+          setAcumulado(acumulado + premio);
+          return goBack();
+        }
+      });
     }
-  }
+  };
 
   return (
     <>
-        <BsChevronLeft className="returnbutton" onClick={handleExit}/>
+      <BsChevronLeft className="returnbutton" onClick={handleExit} />
       <div className="container-g">
         <div className="info">
           <p className="acumulado">Acumulado: {acumulado} USD</p>

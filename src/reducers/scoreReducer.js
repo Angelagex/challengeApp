@@ -4,7 +4,7 @@ const initialState = {
   user: [],
 };
 
-export const userReducer = (state = initialState, action) => {
+export const scoreReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.userAddNew:
       return {
